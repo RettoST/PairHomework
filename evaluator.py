@@ -30,6 +30,8 @@ def evaluate(node: Node):
         result = left / right
         if result.denominator == 1:
             raise InvalidExpression("除法结果为整数")
+        if result >= 1:
+            raise InvalidExpression("除法结果不是真分数")
         return result
 
     raise InvalidExpression(f"未知运算符：{node.op}")

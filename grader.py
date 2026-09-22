@@ -33,12 +33,14 @@ def parse_answer(line: str) -> Fraction:
 """
 def eval_expr_string(s: str) -> Fraction:
     s = s.replace("×", "*").replace("÷", "/")
+    s = s.replace(" ", "") # 替换掉所有的空格
 
-    # 带分数 a'b/c -> (Fraction(a,1)+Fraction(b,c))
     s = re.sub(r"(\d+)'(\d+)/(\d+)",
                r"(Fraction(\1,1)+Fraction(\2,\3))", s)
-    # 真分数 a/b -> Fraction(a,b)
     s = re.sub(r"(\d+)/(\d+)", r"Fraction(\1,\2)", s)
+
+    # 把剩下的数字都包成 Fraction(数字)
+    s = re.sub(r"(?<![\d)])(\d+)(?![\d(])", r"Fraction(\1)", s)
 
     return eval(s, {"Fraction": Fraction})
 
