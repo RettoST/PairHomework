@@ -1,15 +1,11 @@
 # 四则运算题目生成器 设计文档
 
-
-
 ## 目标
 
 命令行程序，支持：
 
 * 生成小学四则运算题：`python main.py -n 10 -r 10`
 * 批改题目和答案：`python main.py -e Exercises.txt -a Answers.txt`
-
-
 
 ## 模块
 
@@ -20,8 +16,6 @@
 * `dedup.py`：题目去重
 * `grader.py`：批改统计
 
-
-
 ## 数据结构
 
 表达式用二叉树：
@@ -29,36 +23,24 @@
 ```python
 
 class Node:
-
   value = None   # Fraction
-
   op = None      # + - \* /
-
   left = None
-
   right = None
 
 ```
-
-
 
 题目：
 
 ```python
 
 class Question:
-
-   expr\_tree
-
-   expr\_str
-
-   answer
-
-   answer\_str
+    expr_tree: Node
+    expr_str: str      # 如 "1/2 + 1/3"
+    answer: Fraction   # 答案
+    answer_str: str    # 如 "5/6"
 
 ```
-
-
 
 ## 生成规则
 
@@ -70,53 +52,34 @@ class Question:
 * 题目不能重复
 * 去重：对 +、* 左右子树排序后生成标准字符串比较
 
-
-
 ## 文件格式
 
 Exercises.txt
 
 ```text
-
 1. 1/2 + 1/3 = 
-
 2. 2/3 × 3/4 = 
-
 ```
-
-
 
 Answers.txt
 
 ```text
-
 1. 5/6
-
 2. 1/2
-
 ```
-
-
 
 Grade.txt
 
 ```text
-
 Correct: 5 (1, 3, 5, 7, 9)
-
 Wrong: 5 (2, 4, 6, 8, 10)
-
 ```
-
-
 
 ## 分数格式
 
 * 整数：`3`
 * 真分数：`3/5`
 * 带分数：`2'3/8`
-
-
 
 ## 批改流程
 
@@ -126,8 +89,6 @@ Wrong: 5 (2, 4, 6, 8, 10)
 4. 统计正确、错误题号
 5. 写入 Grade.txt
 
-
-
 ## 测试
 
 * `-n 10 -r 10`
@@ -136,24 +97,3 @@ Wrong: 5 (2, 4, 6, 8, 10)
 * 除法结果非整数
 * 运算符不超过 3 个
 * 批改统计正确
-
-
-
-## 开发计划
-
-| 阶段 | 内容 | 预估 |
-
-|---|---|---|
-
-| 1 | 参数、文件读写 | 30 分钟 |
-
-| 2 | 表达式树、生成、求值 | 60 分钟 |
-
-| 3 | 分数格式、去重 | 40 分钟 |
-
-| 4 | 批改功能 | 30 分钟 |
-
-| 5 | 测试、修 bug | 40 分钟 |
-
-| 合计 |  | 200 分钟 |
-
