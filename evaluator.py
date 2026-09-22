@@ -1,11 +1,10 @@
-"""表达式求值与合法性检查。"""
 from model import Node
 
-"""表达式不满足题目约束时抛出。"""
+"""表达式不满足题目约束时抛出"""
 class InvalidExpression(Exception):
     pass
 
-"""递归求值，返回 Fraction。不满足约束时抛 InvalidExpression。"""
+"""递归求值，返回 Fraction。不满足约束时抛 InvalidExpression"""
 def evaluate(node: Node):
     
     if node.is_leaf():
